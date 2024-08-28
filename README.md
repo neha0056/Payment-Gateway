@@ -9,6 +9,8 @@ CSS 🎨: Stylish and responsive design.
 
 JavaScript ⚙️: Validating the card details based on the type and number of digits.
 
+
+![image](https://github.com/user-attachments/assets/a39d2e25-9758-4b3b-b278-043d39fc159c)
 💡 Features
 
 Supports AMEX, RUPAY, MASTERCARD, and DISCOVERY cards 💳.
