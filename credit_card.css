@@ -1,0 +1,40 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+
+.payment-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+#cardIcon {
+    margin-top: 10px;
+}
+
+.visa-icon {
+    background: url('visa-icon.png') no-repeat center center/contain;
+    width: 50px;
+    height: 30px;
+}
+
+.mastercard-icon {
+    background: url('mastercard-icon.jpg') no-repeat center center/contain;
+    width: 50px;
+    height: 30px;
+}
+
+amex-icon {
+    background: url('amex-icon.png') no-repeat center center/contain;
+    width: 50px;
+    height: 30px;
+}
+
+rupay-icon {
+    background: url('rupay-icon.png') no-repeat center center/contain;
+    width: 50px;
+    height: 30px;
+}

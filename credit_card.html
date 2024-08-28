@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Payment Gateway</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-weight: bold;
+        }
+        .error {
+			color: red;
+		}
+        
+        #paymentContainer {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: left;
+            position: relative;
+        }
+
+        #cardLogos {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        
+        #cardNumber, #cardHolderName {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        } 
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .exp-cvcode{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        }
+        #logoContainer {
+            position: absolute;
+            top: 39.5%;
+            right: 25px;
+            transform: translateY(-50%);
+        }
+
+        #logoContainer img {
+            max-width: 50px;
+            max-height: 50px;
+            display: none;
+        }
+        #submit {
+            width: 100%;
+            background-color: #4caf50;
+            color: #fff;
+            height: 50px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        #message {
+        color: green;
+        font-weight: bold;
+        text-align: center;
+
+        }
+
+	
+    </style>
+</head>
+<body>
+    
+    <div id="paymentContainer">
+        <h2>Payment Details</h2>
+        <div id="cardLogos">
+            <img src="mastercard_logo.png" alt="Mastercard Logo" width="50">
+            <img src="discover_logo.png" alt="Discover Logo" width="50">
+            <img src="paypal_logo.png" alt="Paypal Logo" width="50">
+            <img src="amex_logo.png" alt="American Express Logo" width="50">
+        </div>
+    <div id="card">
+         <p>CARD NUMBER</p>
+         <input type="text" id="cardNumber" placeholder="Enter valid card number" oninput="detectCardType(this.value)">
+         <p class="error" id="cardError" style="display: none;"></p>
+        
+         <!-- Logo container for dynamic logo display -->
+            <div id="logoContainer">
+                <img id="visaLogo" src="visa_logo.png" alt="Visa Logo">
+                <img id="mastercardLogo" src="mastercard_logo.png" alt="Mastercard Logo">
+                <img id="rupayLogo" src="rupay_logo.png" alt="Rupay Logo">
+                <img id="amexLogo" src="amex_logo.png" alt="American Express Logo">
+            </div>
+        <span class="error" id="cardError"></span>
+    </div>
+         <div class="exp-cvcode">
+        <div class="form-group">
+            <label for="expirationDate">EXPIRATION DATE</label>
+            <input type="text" id="expirationDate" placeholder="MM/YY"><span class="error" id="expirationError"></span>
+        </div>
+        <div class="form-group">
+            <label for="cvCode">CV CODE</label>
+            <input type="text" id="cvCode" placeholder="Enter CV code"><span class="error" id="cvError"></span>
+        </div>
+    </div>
+        <div>
+            <p>CARD OWNER<p>
+            <input type="text" id="cardHolderName" placeholder="Card Holder Name" required>
+    
+        </div>
+
+        <button id="submit" value="Submit">Confirm Payment</button>
+        <div id="message"></div> 
+    </div>
+       
+
+    <script>
+        function detectCardType(cardNumber) {
+            // Regular expressions for card patterns
+            var visaPattern = /^4/;
+            var mastercardPattern = /^5/;
+            var rupayPattern = /^6/;
+            var amexPattern = /^3/;
+            var error = document.getElementById('cardError');
+            var input=parseFloat(cardNumber.value);
+
+            // Hide all logos by default
+            document.getElementById('visaLogo').style.display = 'none';
+            document.getElementById('mastercardLogo').style.display = 'none';
+            document.getElementById('rupayLogo').style.display = 'none';
+            document.getElementById('amexLogo').style.display = 'none';
+
+            // Check card number pattern and display the corresponding logo
+            if (visaPattern.test(cardNumber)) {
+                document.getElementById('visaLogo').style.display = 'inline';
+            } else if (mastercardPattern.test(cardNumber)) {
+                document.getElementById('mastercardLogo').style.display = 'inline';
+            } else if (rupayPattern.test(cardNumber)) {
+                document.getElementById('rupayLogo').style.display = 'inline';
+            } else if (amexPattern.test(cardNumber)) {
+                document.getElementById('amexLogo').style.display = 'inline';
+            }
+            else if (input > 3 || input < 6) {
+                error.style.display = 'error';
+            }
+        }
+        // Listen for form submission
+		document.getElementById("submit").addEventListener('click', function(event) {
+			// Clear previous error messages
+			document.getElementById("cardError").textContent = "";
+			document.getElementById("expirationError").textContent = "";
+            document.getElementById("cvError").textContent = "";
+            
+
+
+
+			// Get input values
+			var card = document.getElementById("cardNumber").value;
+			var expiration = document.getElementById("expirationDate").value;
+            var cvv = document.getElementById("cvCode").value;
+
+			// Check if inputs are empty
+			if (card === "") {
+				document.getElementById("cardError").textContent = "Card Number is required.";
+			}
+			if (expiration === "") {
+				document.getElementById("expirationError").textContent = "Expiry is required.";
+			}
+            if (cvv === "") {
+				document.getElementById("cvError").textContent = "CVV code is required.";
+			}
+
+			// If there are errors, prevent form submission
+			if (document.getElementById("cardError").textContent !== "" || document.getElementById("expirationError").textContent !== "" ||
+            document.getElementById("cvError").textContent !== "") {
+				event.preventDefault();
+			}
+            else {
+		document.getElementById('message').innerText = '';
+		document.getElementById('message').innerText = 'Form submitted successfully!';
+		// form submitted successfully, do something here
+	}
+		});
+    </script>
+
+</body>
+</html>
